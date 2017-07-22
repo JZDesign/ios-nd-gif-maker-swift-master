@@ -8,28 +8,60 @@
 
 import UIKit
 
-class GifEditorViewController: UIViewController {
+class GifEditorViewController: UIViewController, UITextFieldDelegate {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBOutlet var captionTextField: UITextField!
+    @IBOutlet var gifImageView: UIImageView!
+    var gif: Gif?
+    let keyboardSlider = KeyboardSlider()
+    
+    
+    // MARK: Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        gifImageView.image = gif?.gifImage
+        keyboardSlider.subscribeToKeyboardNotifications(view: view)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        keyboardSlider.unsubscribeFromKeyboardNotifications()
     }
-    */
+    
+    
+    // MARK: Preview
+    
+    func doPreview() {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "PreviewViewController") as! PreviewViewController
+        //self.gif?.caption = self.captionTextField.text!
+        let regift = Regift.init(sourceFileURL: (gif?.url)!, frameCount: frameCount, delayTime: delayTime)
+        let url = regift.createGif(caption: captionTextField.text, font: captionTextField.font)
+        let newGif = Gif.init(url: url!, videoURL: (gif?.videoURL)!, caption: captionTextField.text)
+        vc.gif = newGif
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    
+    // MARK: TextfieldDelegate
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // TODO:
+        textField.placeholder = ""
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if view.frame.origin.y != 0 {
+            // smooth animation to hide the keyboard in place of the observer
+            // using the observer was choppy
+            UIView.setAnimationCurve(UIViewAnimationCurve.easeInOut)
+            UIView.animate(withDuration: 0.2) {
+                self.view.frame.origin.y = 0
+            }
+        }
 
+        return true
+    }
+    
 }

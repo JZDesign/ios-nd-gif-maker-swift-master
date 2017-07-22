@@ -209,6 +209,10 @@
                             <color key="tintColor" red="1" green="0.25490196079999999" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="captionTextField" destination="Hx5-Iw-gBr" id="0OU-b2-POU"/>
+                        <outlet property="gifImageView" destination="Idg-S9-dYE" id="mty-cY-a6T"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSQ-pK-rKN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -243,6 +247,9 @@
                                         <state key="normal" title="SHARE">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="doShareButton:" destination="cB7-Y1-ZFX" eventType="touchUpInside" id="2qn-s5-tR0"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xoi-MZ-GNH">
                                         <rect key="frame" x="0.0" y="66" width="343" height="50"/>
@@ -254,6 +261,9 @@
                                         <state key="normal" title="CREATE AND SAVE">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="doSaveButton:" destination="cB7-Y1-ZFX" eventType="touchUpInside" id="kjr-OK-m7Y"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -269,6 +279,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Preview" id="SWX-N6-oaS"/>
+                    <connections>
+                        <outlet property="gifImageView" destination="HQu-c2-zTO" id="pkH-R6-XKu"/>
+                        <outlet property="saveButton" destination="xoi-MZ-GNH" id="uLc-NV-J0E"/>
+                        <outlet property="shareButton" destination="lnU-9g-0xe" id="iaF-cX-lJp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCC-tI-bRp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
